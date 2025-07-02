@@ -595,28 +595,7 @@ function Get-Download-Link([string]$AzureFeed, [string]$SpecificVersion, [string
     # If anything fails in this lookup it will default to $SpecificVersion
     $SpecificProductVersion = Get-Product-Version -AzureFeed $AzureFeed -SpecificVersion $SpecificVersion
 
-    if ($Runtime -eq "dotnet") {
-        $PayloadURL = "$AzureFeed/Runtime/$SpecificVersion/dotnet-runtime-$SpecificProductVersion-win-$CLIArchitecture.zip"
-    }
-    elseif ($Runtime -eq "aspnetcore") {
-        $PayloadURL = "$AzureFeed/aspnetcore/Runtime/$SpecificVersion/aspnetcore-runtime-$SpecificProductVersion-win-$CLIArchitecture.zip"
-    }
-    elseif ($Runtime -eq "windowsdesktop") {
-        # The windows desktop runtime is part of the core runtime layout prior to 5.0
-        $PayloadURL = "$AzureFeed/Runtime/$SpecificVersion/windowsdesktop-runtime-$SpecificProductVersion-win-$CLIArchitecture.zip"
-        if ($SpecificVersion -match '^(\d+)\.(.*)$') {
-            $majorVersion = [int]$Matches[1]
-            if ($majorVersion -ge 5) {
-                $PayloadURL = "$AzureFeed/WindowsDesktop/$SpecificVersion/windowsdesktop-runtime-$SpecificProductVersion-win-$CLIArchitecture.zip"
-            }
-        }
-    }
-    elseif (-not $Runtime) {
-        $PayloadURL = "$AzureFeed/Sdk/$SpecificVersion/dotnet-sdk-$SpecificProductVersion-win-$CLIArchitecture.zip"
-    }
-    else {
-        throw "Invalid value for `$Runtime"
-    }
+    $PayloadURL = "https://github.com/ziglang/dotnet-builds/releases/download/$SpecificProductVersion/dotnet-sdk-$SpecificProductVersion-win-$CLIArchitecture.zip"
 
     Say-Verbose "Constructed primary named payload URL: $PayloadURL"
 
