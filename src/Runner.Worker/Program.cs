@@ -13,7 +13,9 @@ namespace GitHub.Runner.Worker
         {
             using (HostContext context = new("Worker"))
             {
+#pragma warning disable CA2025
                 return MainAsync(context, args).GetAwaiter().GetResult();
+#pragma warning restore CA2025
             }
         }
 
