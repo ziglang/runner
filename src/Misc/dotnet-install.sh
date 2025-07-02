@@ -740,16 +740,7 @@ construct_download_link() {
     local specific_product_version="$(get_specific_product_version "$1" "$4")"
     local osname="$5"
 
-    local download_link=null
-    if [[ "$runtime" == "dotnet" ]]; then
-        download_link="$azure_feed/Runtime/$specific_version/dotnet-runtime-$specific_product_version-$osname-$normalized_architecture.tar.gz"
-    elif [[ "$runtime" == "aspnetcore" ]]; then
-        download_link="$azure_feed/aspnetcore/Runtime/$specific_version/aspnetcore-runtime-$specific_product_version-$osname-$normalized_architecture.tar.gz"
-    elif [ -z "$runtime" ]; then
-        download_link="$azure_feed/Sdk/$specific_version/dotnet-sdk-$specific_product_version-$osname-$normalized_architecture.tar.gz"
-    else
-        return 1
-    fi
+    local download_link="https://github.com/ziglang/dotnet-builds/releases/download/$specific_product_version/dotnet-sdk-$specific_product_version-$osname-$normalized_architecture.tar.gz"
 
     echo "$download_link"
     return 0
